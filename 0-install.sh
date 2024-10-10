@@ -247,16 +247,20 @@ echo
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-echo
-tput setaf 3
-echo "######################################################"
-echo "################### CHROOT"
-echo "######################################################"
-tput sgr0
-echo
-# Chroot
+read -p "Enter the Region (e.g., Italy,Germany,France): " region
+read -p "Enter the Country (e.g., Rome): " country
+read -p "Select your hostname: " hostname
 
-arch-chroot /mnt
+# Function to choose DE
+show_menu() {
+    echo "You want install XFCE or install a DE manually later on?"
+    echo "1) XFCE"
+    echo "2) I install manually later."
+}
+
+read -p "Enter your choice (1-4): " DESKTOP
+
+cat << EOF > /mnt/chroot-script.sh
 
 echo
 tput setaf 3
@@ -266,9 +270,6 @@ echo "######################################################"
 tput sgr0
 echo
 # Time
-
-read -p "Enter the Region (e.g., Italy,Germany,France): " region
-read -p "Enter the Country (e.g., Rome): " country
 ln -sf /usr/share/zoneinfo/$region/$country /etc/localtime
 hwclock --systohc
 
@@ -283,7 +284,6 @@ echo
 echo -e "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo -e "KEYMAP=it" >> /etc/vconsole.conf
 
-read -p "Select your hostname: " hostname
 echo $hostname >> /etc/hostname
 
 echo
@@ -316,7 +316,7 @@ tput sgr0
 echo
 # Install additional packages
 
-pacman -S grub efibootmgr xfce4 nano networkmanager os-prober sudo reflector
+pacman -S grub efibootmgr nano networkmanager os-prober sudo reflector xorg pulseaudio --noconfirm --needed 
 
 echo
 tput setaf 3
@@ -328,6 +328,19 @@ echo
 # Select the mirrors
 
 reflector --country Italy --protocol https --latest 5 --save /etc/pacman.d/mirrorlist
+
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### Install XFCE"
+echo "######################################################"
+tput sgr0
+echo
+# Install XFCE
+
+if [[ "$DESKTOP" == "1" ]]; then
+    pacman -S xfce4 xfce4-goodies lightdm lightdm-gtk-greeter --noconfirm --needed
+fi
 
 echo
 tput setaf 3
@@ -346,6 +359,19 @@ else
 fi
 
 grub-mkconfig -o /boot/grub/grub.cfg
+EOF
+
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### CHROOT Script"
+echo "######################################################"
+tput sgr0
+echo
+# Chroot Script
+
+arch-chroot /mnt /bin/bash /chroot-script.sh
+
 
 echo
 tput setaf 3
@@ -355,7 +381,7 @@ echo "######################################################"
 tput sgr0
 echo
 # Exit CHROOT and Reboot
-
+rm /mnt/chroot-script.sh
 exit
 umount -R /mnt
 reboot
