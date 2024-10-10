@@ -228,18 +228,6 @@ fi
 echo
 tput setaf 3
 echo "######################################################"
-echo "################### Select the mirrors"
-echo "######################################################"
-tput sgr0
-echo
-# Select the mirrors
-
-pacman -S reflector
-reflector --country Italy --protocol https --latest 5 --save /etc/pacman.d/mirrorlist
-
-echo
-tput setaf 3
-echo "######################################################"
 echo "################### Install essential packages"
 echo "######################################################"
 tput sgr0
@@ -328,8 +316,18 @@ tput sgr0
 echo
 # Install additional packages
 
-pacman -S grub efibootmgr xfce4 nano networkmanager os-prober sudo 
+pacman -S grub efibootmgr xfce4 nano networkmanager os-prober sudo reflector
 
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### Select the mirrors"
+echo "######################################################"
+tput sgr0
+echo
+# Select the mirrors
+
+reflector --country Italy --protocol https --latest 5 --save /etc/pacman.d/mirrorlist
 
 echo
 tput setaf 3
