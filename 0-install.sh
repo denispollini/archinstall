@@ -83,6 +83,9 @@ fi
 # Ask the user whether to create a swap partition
 read -p "Do you want to create a swap partition? (y/n): " create_swap
 
+read -p "Enter the size for the root partition (e.g., 20G): " root_size
+read -p "Enter the size for the swap partition (e.g., 4G): " swap_size
+
 # If the system is in UEFI mode, create 3 partitions (EFI, root, swap if desired)
 if [[ $? -eq 0 && "$platform_size" == "64" ]]; then
     echo "The system is in UEFI mode. Proceeding with partition creation."
@@ -102,7 +105,6 @@ if [[ $? -eq 0 && "$platform_size" == "64" ]]; then
     echo ef  # Set type to EFI (type 1)
 
     # Root partition (user-defined size)
-    read -p "Enter the size for the root partition (e.g., 20G): " root_size
     echo n  # Add new partition
     echo 2  # Partition number
     echo    # Default first sector
@@ -110,7 +112,6 @@ if [[ $? -eq 0 && "$platform_size" == "64" ]]; then
 
     # Swap partition (optional)
     if [[ "$create_swap" == "y" ]]; then
-        read -p "Enter the size for the swap partition (e.g., 4G): " swap_size
         echo n  # Add new partition
         echo 3  # Partition number
         echo    # Default first sector
