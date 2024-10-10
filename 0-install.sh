@@ -234,7 +234,7 @@ tput sgr0
 echo
 # Install essential packages
 
-pacstrap -K /mnt base linux linux-firmware
+pacstrap -K /mnt base base-devel linux linux-firmware linux-headers networkmanager wireless_tools nano intel-ucode bluez bluez-utils git --noconfirm --needed
 
 echo
 tput setaf 3
@@ -247,9 +247,29 @@ echo
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-read -p "Enter the Region (e.g., Italy,Germany,France): " region
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### Request some data"
+echo "######################################################"
+tput sgr0
+echo
+# Choose DE
+read -p "Enter the Region (e.g., Europe,America): " region
 read -p "Enter the Country (e.g., Rome): " country
 read -p "Select your hostname: " hostname
+read -p "Please enter your username: " user
+read -p "Please enter your Full Name: " name
+read -sp "Please set a password: " password
+
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### Choose DE"
+echo "######################################################"
+tput sgr0
+echo
+# Choose DE
 
 # Function to choose DE
 show_menu() {
@@ -258,9 +278,25 @@ show_menu() {
     echo "2) I install manually later."
 }
 
-read -p "Enter your choice (1-4): " DESKTOP
+show_menu1
+read -p "Enter your choice (1-2): " DESKTOP
+
 
 cat << EOF > /mnt/chroot-script.sh
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### Add User"
+echo "######################################################"
+tput sgr0
+echo
+# Time
+useradd -m $user
+usermod -c "${name}" $user
+usermod -aG wheel $user
+echo $user:$password | chpasswd
+sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+
 
 echo
 tput setaf 3
@@ -316,7 +352,7 @@ tput sgr0
 echo
 # Install additional packages
 
-pacman -S grub efibootmgr nano networkmanager os-prober sudo reflector xorg pulseaudio --noconfirm --needed 
+pacman -S grub efibootmgr networkmanager os-prober sudo reflector xorg pulseaudio --noconfirm --needed 
 
 echo
 tput setaf 3
@@ -332,6 +368,20 @@ reflector --country Italy --protocol https --latest 5 --save /etc/pacman.d/mirro
 echo
 tput setaf 3
 echo "######################################################"
+echo "################### Audio Driver"
+echo "######################################################"
+tput sgr0
+echo
+# Audio Driver
+
+pacman -S mesa-utils pipewire pipewire-alsa pipewire-pulse --noconfirm --needed
+
+systemctl enable NetworkManager bluetooth
+systemctl --user enable pipewire pipewire-pulse
+
+echo
+tput setaf 3
+echo "######################################################"
 echo "################### Install XFCE"
 echo "######################################################"
 tput sgr0
@@ -340,6 +390,7 @@ echo
 
 if [[ "$DESKTOP" == "1" ]]; then
     pacman -S xfce4 xfce4-goodies lightdm lightdm-gtk-greeter --noconfirm --needed
+    systemctl enable lightdm
 fi
 
 echo
