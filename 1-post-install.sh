@@ -28,7 +28,6 @@ sudo pacman -S feh --noconfirm --needed
 sudo pacman -S lxappearance --noconfirm --needed
 sudo pacman -S lxappearance --noconfirm --needed
 sudo pacman -S ttf-font-awesome --noconfirm --needed
-sudo pacman -S fonts-font-awesome --noconfirm --needed
 sudo pacman -S ttf-ubuntu-font-family --noconfirm --needed
 sudo pacman -S picom --noconfirm --needed
 sudo pacman -S ttf-droid --noconfirm --needed
