@@ -265,26 +265,6 @@ read -p "Please enter your username: " user
 read -p "Please enter your Full Name: " name
 read -sp "Please set a password: " password
 
-echo
-tput setaf 3
-echo "######################################################"
-echo "################### Choose DE"
-echo "######################################################"
-tput sgr0
-echo
-# Choose DE
-
-# Function to choose DE
-show_menu() {
-    echo "You want install XFCE or install a DE manually later on?"
-    echo "1) XFCE"
-    echo "2) I install manually later."
-}
-
-show_menu
-read -p "Enter your choice (1-2): " DESKTOP
-
-
 cat << EOF > /mnt/chroot-script.sh
 echo
 tput setaf 3
@@ -349,17 +329,6 @@ passwd
 echo
 tput setaf 3
 echo "######################################################"
-echo "################### Install additional packages"
-echo "######################################################"
-tput sgr0
-echo
-# Install additional packages
-
-pacman -S grub efibootmgr networkmanager os-prober sudo reflector xorg pulseaudio --noconfirm --needed 
-
-echo
-tput setaf 3
-echo "######################################################"
 echo "################### Select the mirrors"
 echo "######################################################"
 tput sgr0
@@ -367,34 +336,6 @@ echo
 # Select the mirrors
 
 reflector --country Italy --protocol https --latest 5 --save /etc/pacman.d/mirrorlist
-
-echo
-tput setaf 3
-echo "######################################################"
-echo "################### Audio Driver"
-echo "######################################################"
-tput sgr0
-echo
-# Audio Driver
-
-pacman -S mesa-utils pipewire pipewire-alsa pipewire-pulse --noconfirm --needed
-
-systemctl enable NetworkManager bluetooth
-systemctl --user enable pipewire pipewire-pulse
-
-echo
-tput setaf 3
-echo "######################################################"
-echo "################### Install XFCE"
-echo "######################################################"
-tput sgr0
-echo
-# Install XFCE
-
-if [[ "$DESKTOP" == "1" ]]; then
-    pacman -S xfce4 xfce4-goodies lightdm lightdm-gtk-greeter --noconfirm --needed
-    systemctl enable lightdm
-fi
 
 echo
 tput setaf 3
