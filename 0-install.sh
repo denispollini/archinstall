@@ -84,7 +84,10 @@ fi
 read -p "Do you want to create a swap partition? (y/n): " create_swap
 
 read -p "Enter the size for the root partition (e.g., 20G): " root_size
-read -p "Enter the size for the swap partition (e.g., 4G): " swap_size
+
+if [[ "$create_swap" == "y" ]]; then
+    read -p "Enter the size for the swap partition (e.g., 4G): " swap_size
+fi
 
 # If the system is in UEFI mode, create 3 partitions (EFI, root, swap if desired)
 if [[ $? -eq 0 && "$platform_size" == "64" ]]; then
@@ -234,7 +237,7 @@ tput sgr0
 echo
 # Install essential packages
 
-pacstrap -K /mnt base base-devel linux linux-firmware linux-headers networkmanager wireless_tools nano intel-ucode bluez bluez-utils git --noconfirm --needed
+pacstrap -K /mnt base base-devel linux linux-firmware
 
 echo
 tput setaf 3
@@ -278,7 +281,7 @@ show_menu() {
     echo "2) I install manually later."
 }
 
-show_menu1
+show_menushow
 read -p "Enter your choice (1-2): " DESKTOP
 
 
