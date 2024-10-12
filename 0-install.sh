@@ -223,7 +223,7 @@ echo
 
 if [[ "$platform_size" == "64" ]]; then
 	mount ${DISK}2 /mnt
-	mount --mkdir ${DISK}1 /mnt/boot
+	mount --mkdir ${DISK}1 /mnt/boot/efi
 else
 	mount ${DISK}2 /mnt
 fi
