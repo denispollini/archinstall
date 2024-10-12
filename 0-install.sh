@@ -281,7 +281,7 @@ show_menu() {
     echo "2) I install manually later."
 }
 
-show_menushow
+show_menu
 read -p "Enter your choice (1-2): " DESKTOP
 
 
