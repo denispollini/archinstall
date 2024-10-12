@@ -300,6 +300,10 @@ echo "######################################################"
 tput sgr0
 echo
 # Localization
+
+sudo sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+locale-gen
+
 echo -e "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo -e "KEYMAP=it" >> /etc/vconsole.conf
 
@@ -341,7 +345,7 @@ tput sgr0
 echo
 # Install additional packages
 
-pacman -S grub efibootmgr networkmanager os-prober base-devel xdg-utils xdg-user-dirs bluez bluez-utils cups linux-headers sudo reflector xorg pulseaudio alsa-utils pavucontrol --noconfirm --needed 
+pacman -S grub efibootmgr networkmanager os-prober git xdg-utils xdg-user-dirs bluez bluez-utils cups linux-headers sudo reflector xorg pulseaudio alsa-utils pavucontrol --noconfirm --needed 
 
 echo
 tput setaf 3
