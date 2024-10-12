@@ -305,6 +305,12 @@ echo -e "KEYMAP=it" >> /etc/vconsole.conf
 
 echo $hostname >> /etc/hostname
 
+cat << EOF1 >> /etc/hosts
+127.0.0.1      localhost
+::1            localhost
+127.0.1.1      $hostname.localdomain    $hostname
+EOF1
+
 echo
 tput setaf 3
 echo "######################################################"
@@ -335,7 +341,19 @@ tput sgr0
 echo
 # Install additional packages
 
-pacman -S grub efibootmgr networkmanager os-prober sudo reflector xorg pulseaudio --noconfirm --needed 
+pacman -S grub efibootmgr networkmanager os-prober base-devel xdg-utils xdg-user-dirs bluez bluez-utils cups linux-headers sudo reflector xorg pulseaudio alsa-utils pavucontrol --noconfirm --needed 
+
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### Enable Services"
+echo "######################################################"
+tput sgr0
+echo
+# Enable Services
+systemctl enable NetworkManager
+systemctl enable bluetooth
+systemctl enable cups
 
 echo
 tput setaf 3
@@ -358,7 +376,7 @@ echo
 # Install and Configure Grub Boot Loader
 
 if [[ "$platform_size" == "64" ]]; then
-	grub-install --target=x86_64-efi --efi-directory=/boot/efi
+	grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 
 else
 	grub-install --target=i386-pc $DISK
