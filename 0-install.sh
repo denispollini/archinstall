@@ -329,6 +329,17 @@ passwd
 echo
 tput setaf 3
 echo "######################################################"
+echo "################### Install additional packages"
+echo "######################################################"
+tput sgr0
+echo
+# Install additional packages
+
+pacman -S grub efibootmgr networkmanager os-prober sudo reflector xorg pulseaudio --noconfirm --needed 
+
+echo
+tput setaf 3
+echo "######################################################"
 echo "################### Select the mirrors"
 echo "######################################################"
 tput sgr0
