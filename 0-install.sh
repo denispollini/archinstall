@@ -258,7 +258,7 @@ echo
 read -p "Enter the Region (e.g., Europe,America): " region
 read -p "Enter the Country (e.g., Rome): " country
 read -p "Select your hostname: " hostname
-read -p "Please set a password for root user: " root_password
+read -sp "Please set a password for root user: " root_password
 read -p "Please enter your username: " user
 read -sp "Please set a password: " password
 
