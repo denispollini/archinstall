@@ -105,12 +105,6 @@ if [[ $? -eq 0 && "$platform_size" == "64" ]]; then
     echo t  # Change partition type
     echo ef  # Set type to EFI (type 1)
 
-    # Root partition (user-defined size)
-    echo n  # Add new partition
-    echo 2  # Partition number
-    echo    # Default first sector
-    echo    # Take the remain space on disk
-
     # Swap partition (optional)
     if [[ "$create_swap" == "y" ]]; then
         echo n  # Add new partition
@@ -121,6 +115,12 @@ if [[ $? -eq 0 && "$platform_size" == "64" ]]; then
         echo 3  # Select third partition (swap)
         echo 82 # Set partition type to Linux swap
     fi
+
+    # Root partition (user-defined size)
+    echo n  # Add new partition
+    echo 2  # Partition number
+    echo    # Default first sector
+    echo    # Take the remain space on disk
 
     echo w  # Write changes to the disk
     ) | fdisk "$DISK"
@@ -161,13 +161,6 @@ else
     (
     echo o  # Create a new DOS (MBR) partition table
 
-    # Root partition (user-defined size)
-    echo n  # Add new partition
-    echo p  # Primary partition
-    echo 1  # Partition number
-    echo    # Default first sector
-    echo    # Take the remain space on disk
-
     # Swap partition (optional)
     if [[ "$create_swap" == "y" ]]; then
         read -p "Enter the size for the swap partition (e.g., 4G): " swap_size
@@ -180,6 +173,13 @@ else
         echo 2  # Select second partition (swap)
         echo 82 # Set partition type to Linux swap
     fi
+
+    # Root partition (user-defined size)
+    echo n  # Add new partition
+    echo p  # Primary partition
+    echo 1  # Partition number
+    echo    # Default first sector
+    echo    # Take the remain space on disk
 
     echo w  # Write changes to the disk
     ) | fdisk "$DISK"
