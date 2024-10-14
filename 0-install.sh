@@ -407,11 +407,11 @@ systemctl enable cups
 systemctl enable sshd
 systemctl enable avahi-deamon
 systemctl enable tlp
-systemctl reflector.timer
-systemctl fstrim.timer
-systemctl libvirtd
-systemctl firewalld
-systemctl acpid
+systemctl enable reflector.timer
+systemctl enable fstrim.timer
+systemctl enable libvirtd
+systemctl enable firewalld
+systemctl enable acpid
 
 echo
 tput setaf 3
