@@ -63,7 +63,7 @@ tput sgr0
 echo
 # Install AUR Software
 
-yay -S brave-bin --noconfirm
+#yay -S brave-bin --noconfirm
 
 echo
 tput setaf 3

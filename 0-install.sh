@@ -83,8 +83,6 @@ fi
 # Ask the user whether to create a swap partition
 read -p "Do you want to create a swap partition? (y/n): " create_swap
 
-read -p "Enter the size for the root partition (e.g., 20G): " root_size
-
 if [[ "$create_swap" == "y" ]]; then
     read -p "Enter the size for the swap partition (e.g., 4G): " swap_size
 fi
@@ -111,7 +109,7 @@ if [[ $? -eq 0 && "$platform_size" == "64" ]]; then
     echo n  # Add new partition
     echo 2  # Partition number
     echo    # Default first sector
-    echo +$root_size  # Partition size
+    echo    # Take the remain space on disk
 
     # Swap partition (optional)
     if [[ "$create_swap" == "y" ]]; then
@@ -157,8 +155,7 @@ else
     echo "The system is in BIOS mode. Proceeding with partition creation (root and optional swap)."
 
     # Ask the user for the sizes of the partitions
-    read -p "Enter the size for the root partition (e.g., 20G): " root_size
-
+   
     echo "Creating partitions on $DISK (BIOS)..."
 
     (
@@ -169,7 +166,7 @@ else
     echo p  # Primary partition
     echo 1  # Partition number
     echo    # Default first sector
-    echo +$root_size  # Partition size
+    echo    # Take the remain space on disk
 
     # Swap partition (optional)
     if [[ "$create_swap" == "y" ]]; then
@@ -237,7 +234,7 @@ tput sgr0
 echo
 # Install essential packages
 
-pacstrap -K /mnt base base-devel linux linux-firmware
+pacstrap -K /mnt base linux linux-firmware git vim nano 
 
 echo
 tput setaf 3
@@ -261,26 +258,11 @@ echo
 read -p "Enter the Region (e.g., Europe,America): " region
 read -p "Enter the Country (e.g., Rome): " country
 read -p "Select your hostname: " hostname
+read -p "Please set a password for root user: " root_password
 read -p "Please enter your username: " user
-read -p "Please enter your Full Name: " name
 read -sp "Please set a password: " password
 
 cat << EOF > /mnt/chroot-script.sh
-echo
-tput setaf 3
-echo "######################################################"
-echo "################### Add User"
-echo "######################################################"
-tput sgr0
-echo
-# Time
-useradd -m $user
-usermod -c "${name}" $user
-usermod -aG wheel $user
-echo $user:$password | chpasswd
-sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
-
-
 echo
 tput setaf 3
 echo "######################################################"
@@ -318,23 +300,12 @@ EOF1
 echo
 tput setaf 3
 echo "######################################################"
-echo "################### Initramfs"
-echo "######################################################"
-tput sgr0
-echo
-# Initramfs
-
-mkinitcpio -P
-
-echo
-tput setaf 3
-echo "######################################################"
 echo "################### Set root password"
 echo "######################################################"
 tput sgr0
 echo
 # Set root password
-passwd
+echo root:$root_password | chpasswd
 
 echo
 tput setaf 3
@@ -345,7 +316,82 @@ tput sgr0
 echo
 # Install additional packages
 
-pacman -S grub efibootmgr networkmanager os-prober git xdg-utils xdg-user-dirs bluez bluez-utils cups linux-headers sudo reflector xorg pulseaudio alsa-utils pavucontrol --noconfirm --needed 
+pacman -S grub --noconfirm --needed                 
+pacman -S efibootmgr --noconfirm --needed
+pacman -S os-prober --noconfirm --needed
+pacman -S networkmanager --noconfirm --needed
+pacman -S network-manager-applet --noconfirm --needed
+pacman -S dialog --noconfirm --needed
+pacman -S wpa_supplicant --noconfirm --needed
+pacman -S mtools --noconfirm --needed
+pacman -S dosfstools --noconfirm --needed
+pacman -S base-devel --noconfirm --needed
+pacman -S linux-headers --noconfirm --needed
+pacman -S avahi --noconfirm --needed
+pacman -S xdg-user-dirs --noconfirm --needed
+pacman -S xdg-utils --noconfirm --needed
+pacman -S gvfs --noconfirm --needed
+pacman -S gvfs-smb --noconfirm --needed
+pacman -S nfs-utils --noconfirm --needed
+pacman -S inet-utils --noconfirm --needed
+pacman -S dnsutils --noconfirm --needed
+pacman -S bluez --noconfirm --needed
+pacman -S bluez-utils --noconfirm --needed
+pacman -S cups --noconfirm --needed
+pacman -S hplip --noconfirm --needed
+pacman -S alsa-utils --noconfirm --needed
+pacman -S pulseaudio --noconfirm --needed
+pacman -S bash-completion --noconfirm --needed
+pacman -S openssh --noconfirm --needed
+pacman -S rsync --noconfirm --needed
+pacman -S reflector --noconfirm --needed
+pacman -S acpi --noconfirm --needed
+pacman -S acpi_call --noconfirm --needed
+pacman -S tlp --noconfirm --needed
+pacman -S virt-manager --noconfirm --needed
+pacman -S qemu --noconfirm --needed
+pacman -S qemu-arch-extra --noconfirm --needed
+pacman -S ovmf --noconfirm --needed
+pacman -S bridge-utils --noconfirm --needed
+pacman -S dnsmasq --noconfirm --needed
+pacman -S vde2 --noconfirm --needed
+pacman -S openbsd-netcat --noconfirm --needed
+pacman -S ebtables --noconfirm --needed
+pacman -S iptables --noconfirm --needed
+pacman -S ipset --noconfirm --needed
+pacman -S firewalld --noconfirm --needed
+pacman -S flatpak --noconfirm --needed
+pacman -S sof-firmware --noconfirm --needed
+pacman -S nss-mdns --noconfirm --needed
+pacman -S acpid --noconfirm --needed
+
+# Uncomment if you have AMD or Intel CPU only for bare-metal not VM or Container
+
+pacman -S amd-ucode --noconfirm --needed
+pacman -S intel-ucode --noconfirm --needed
+
+# Uncomment if you have AMD or Nvidia GPU
+
+# pacman -S xf86-video-amdgpu --noconfirm --needed
+# pacman -S nvidia nvidia-utils nvidia-settings --noconfirm --needed
+
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### Install and Configure Grub Boot Loader"
+echo "######################################################"
+tput sgr0
+echo
+# Install and Configure Grub Boot Loader
+
+if [[ "$platform_size" == "64" ]]; then
+    grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+
+else
+    grub-install --target=i386-pc $DISK
+fi
+
+grub-mkconfig -o /boot/grub/grub.cfg
 
 echo
 tput setaf 3
@@ -358,35 +404,28 @@ echo
 systemctl enable NetworkManager
 systemctl enable bluetooth
 systemctl enable cups
+systemctl enable sshd
+systemctl enable avahi-deamon
+systemctl enable tlp
+systemctl reflector.timer
+systemctl fstrim.timer
+systemctl libvirtd
+systemctl firewalld
+systemctl acpid
 
 echo
 tput setaf 3
 echo "######################################################"
-echo "################### Select the mirrors"
+echo "################### Add User"
 echo "######################################################"
 tput sgr0
 echo
-# Select the mirrors
+# Add User
 
-reflector --country Italy --protocol https --latest 5 --save /etc/pacman.d/mirrorlist
-
-echo
-tput setaf 3
-echo "######################################################"
-echo "################### Install and Configure Grub Boot Loader"
-echo "######################################################"
-tput sgr0
-echo
-# Install and Configure Grub Boot Loader
-
-if [[ "$platform_size" == "64" ]]; then
-	grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-
-else
-	grub-install --target=i386-pc $DISK
-fi
-
-grub-mkconfig -o /boot/grub/grub.cfg
+useradd -m $user
+usermod -aG libvirt $user
+echo $user:$password | chpasswd
+echo "$user ALL=[ALL] ALL" >> /etc/sudoers.d/$user
 EOF
 
 echo
@@ -400,7 +439,6 @@ echo
 
 arch-chroot /mnt /bin/bash /chroot-script.sh
 
-
 echo
 tput setaf 3
 echo "######################################################"
@@ -409,7 +447,14 @@ echo "######################################################"
 tput sgr0
 echo
 # Exit CHROOT and Reboot
+
+# Remove the script inside the chroot
 rm /mnt/chroot-script.sh
-exit
+
+# Unmount all partitions
 umount -R /mnt
+
+# Reboot the system
 reboot
+
+
