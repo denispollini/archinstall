@@ -425,7 +425,7 @@ echo
 useradd -m $user
 usermod -aG libvirt $user
 echo $user:$password | chpasswd
-echo "$user ALL=[ALL] ALL" >> /etc/sudoers.d/$user
+echo "$user ALL=(ALL) ALL" >> /etc/sudoers.d/$user
 EOF
 
 echo
