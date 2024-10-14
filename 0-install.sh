@@ -405,7 +405,7 @@ systemctl enable NetworkManager
 systemctl enable bluetooth
 systemctl enable cups
 systemctl enable sshd
-systemctl enable avahi-deamon
+systemctl enable avahi-daemon
 systemctl enable tlp
 systemctl enable reflector.timer
 systemctl enable fstrim.timer
