@@ -367,8 +367,8 @@ pacman -S acpid --noconfirm --needed
 
 # Uncomment if you have AMD or Intel CPU only for bare-metal not VM or Container
 
-pacman -S amd-ucode --noconfirm --needed
-pacman -S intel-ucode --noconfirm --needed
+#pacman -S amd-ucode --noconfirm --needed
+#pacman -S intel-ucode --noconfirm --needed
 
 # Uncomment if you have AMD or Nvidia GPU
 
