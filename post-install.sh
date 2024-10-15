@@ -4,43 +4,19 @@ set -e
 echo
 tput setaf 3
 echo "######################################################"
-echo "################### Install Software"
+echo "################### Install DE Cinnamon"
 echo "######################################################"
 tput sgr0
 echo
-# Install software
+# Install DE Cinnamon
 
-sudo pacman -S xorg  --noconfirm --needed        
+sudo pacman -S xorg  --noconfirm --needed
+sudo pacman -S cinnamon  --noconfirm --needed         
 sudo pacman -S lightdm --noconfirm --needed 
 sudo pacman -S lightdm-gtk-greeter --noconfirm --needed 
-sudo pacman -S i3-wm --noconfirm --needed 
-sudo pacman -S i3lock --noconfirm --needed 
-sudo pacman -S i3status --noconfirm --needed
-sudo pacman -S i3blocks --noconfirm --needed
-sudo pacman -S dmenu --noconfirm --needed
 sudo pacman -S terminator --noconfirm --needed
-sudo pacman -S nitrogen --noconfirm --needed
 sudo pacman -S materia-gtk-theme --noconfirm --needed
 sudo pacman -S papirus-icon-theme --noconfirm --needed
-sudo pacman -S thunar --noconfirm --needed
-sudo pacman -S git --noconfirm --needed
-sudo pacman -S feh --noconfirm --needed
-sudo pacman -S lxappearance --noconfirm --needed
-sudo pacman -S lxappearance --noconfirm --needed
-sudo pacman -S ttf-font-awesome --noconfirm --needed
-sudo pacman -S ttf-ubuntu-font-family --noconfirm --needed
-sudo pacman -S picom --noconfirm --needed
-sudo pacman -S ttf-droid --noconfirm --needed
-sudo pacman -S pacman-contrib --noconfirm --needed
-sudo pacman -S pulseaudio-alsa --noconfirm --needed     
-sudo pacman -S pulseaudio-bluetooth --noconfirm --needed
-sudo pacman -S pulseaudio-equalizer --noconfirm --needed
-sudo pacman -S pulseaudio-jack --noconfirm --needed
-sudo pacman -S alsa-utils --noconfirm --needed
-sudo pacman -S playerctl --noconfirm --needed
-
-
-
 
 echo
 tput setaf 3
