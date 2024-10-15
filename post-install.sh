@@ -26,6 +26,7 @@ echo "######################################################"
 tput sgr0
 echo
 # Install Yay
+cd /home/$USER/
 git clone https://aur.archlinux.org/yay.git
 cd yay
 sudo makepkg -si --noconfirm
