@@ -101,6 +101,7 @@ sudo pacman -S brave-bin --noconfirm --needed
 sudo pacman -S thunderbird --noconfirm --needed
 sudo pacman -S virtualbox --noconfirm --needed
 sudo pacman -S virtualbox-host-dkms --noconfirm --needed
+sudo pacman -S virtualbox-guest-utils --noconfirm --needed
 sudo pacman -S cryptomator --noconfirm --needed
 sudo pacman -S openvpn --noconfirm --needed
 sudo pacman -S keepassxc --noconfirm --needed
@@ -127,3 +128,4 @@ tput sgr0
 echo
 # Enable Services
 sudo systemctl enable --now rustdesk
+sudo systemctl enable --now vboxservice
