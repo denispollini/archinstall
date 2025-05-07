@@ -101,8 +101,7 @@ echo
 cd /home/$USER/
 git clone https://aur.archlinux.org/yay.git
 cd yay
-makepkg -si --noconfirm
-
+yes | makepkg -si
 echo
 tput setaf 3
 echo "######################################################"
