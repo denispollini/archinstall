@@ -107,6 +107,8 @@ sudo pacman -S openvpn --noconfirm --needed
 sudo pacman -S keepassxc --noconfirm --needed
 sudo pacman -S htop --noconfirm --needed
 sudo pacman -S btop --noconfirm --needed
+sudo pacman -S sublime-text-4 --noconfirm --needed
+
 
 echo
 tput setaf 3
