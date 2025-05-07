@@ -67,11 +67,11 @@ fi
 echo
 tput setaf 3
 echo "######################################################"
-echo "################### Install Software"
+echo "################### Install Software From Arch Repo"
 echo "######################################################"
 tput sgr0
 echo
-# Install Software
+# Install Install Software From Arch Repo
 
 sudo pacman -S bash-completion --noconfirm --needed
 sudo pacman -S git --noconfirm --needed
@@ -90,28 +90,28 @@ echo
 sudo pacman -S fish --noconfirm --needed
 #chsh -s /usr/bin/fish $USER
 
-#echo
-#tput setaf 3
-#echo "######################################################"
-#echo "################### Install Yay"
-#echo "######################################################"
-#tput sgr0
-#echo
-## Install Yay
-#cd /home/$USER/
-#git clone https://aur.archlinux.org/yay.git
-#cd yay
-#makepkg -si --noconfirm
-#
-#echo
-#tput setaf 3
-#echo "######################################################"
-#echo "################### Install AUR Software"
-#echo "######################################################"
-#tput sgr0
-#echo
-## Install AUR Software
-#
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### Install Yay"
+echo "######################################################"
+tput sgr0
+echo
+# Install Yay
+cd /home/$USER/
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si --noconfirm
+
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### Install AUR Software"
+echo "######################################################"
+tput sgr0
+echo
+# Install AUR Software
+
 #yay -S brave-bin --noconfirm
 
 echo
