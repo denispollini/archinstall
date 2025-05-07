@@ -75,6 +75,7 @@ echo
 sudo pacman -S base-devel --noconfirm --needed
 sudo pacman -S bash-completion --noconfirm --needed
 sudo pacman -S git --noconfirm --needed
+sudo pacman -S go --noconfirm --needed
 sudo pacman -S terminator --noconfirm --needed
 sudo pacman -S vim --noconfirm --needed
 
