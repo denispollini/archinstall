@@ -87,31 +87,31 @@ tput sgr0
 echo
 # Install and Change Shell to Fish
 sudo pacman -S fish --noconfirm --needed
-chsh -s /usr/bin/fish $USER
+#chsh -s /usr/bin/fish $USER
 
-echo
-tput setaf 3
-echo "######################################################"
-echo "################### Install Yay"
-echo "######################################################"
-tput sgr0
-echo
-# Install Yay
-cd /home/$USER/
-git clone https://aur.archlinux.org/yay.git
-cd yay
-sudo makepkg -si --noconfirm
-
-echo
-tput setaf 3
-echo "######################################################"
-echo "################### Install AUR Software"
-echo "######################################################"
-tput sgr0
-echo
-# Install AUR Software
-
-yay -S brave-bin --noconfirm
+#echo
+#tput setaf 3
+#echo "######################################################"
+#echo "################### Install Yay"
+#echo "######################################################"
+#tput sgr0
+#echo
+## Install Yay
+#cd /home/$USER/
+#git clone https://aur.archlinux.org/yay.git
+#cd yay
+#makepkg -si --noconfirm
+#
+#echo
+#tput setaf 3
+#echo "######################################################"
+#echo "################### Install AUR Software"
+#echo "######################################################"
+#tput sgr0
+#echo
+## Install AUR Software
+#
+#yay -S brave-bin --noconfirm
 
 echo
 tput setaf 3
