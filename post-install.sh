@@ -72,7 +72,7 @@ echo "######################################################"
 tput sgr0
 echo
 # Install Install Software From Arch Repo
-
+sudo pacman -S base-devel --noconfirm --needed
 sudo pacman -S bash-completion --noconfirm --needed
 sudo pacman -S git --noconfirm --needed
 sudo pacman -S terminator --noconfirm --needed
@@ -101,7 +101,7 @@ echo
 cd /home/$USER/
 git clone https://aur.archlinux.org/yay.git
 cd yay
-yes | makepkg -si --noconfirm --needed
+makepkg -si 
 echo
 tput setaf 3
 echo "######################################################"
