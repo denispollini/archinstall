@@ -67,18 +67,45 @@ fi
 echo
 tput setaf 3
 echo "######################################################"
-echo "################### Install Software From Arch Repo"
+echo "################### Install Chaotic Repo"
 echo "######################################################"
 tput sgr0
 echo
-# Install Install Software From Arch Repo
+# Install Chaotic Repo
+yes | sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+yes | sudo pacman-key --lsign-key 3056513887B78AEB
+sudo pacman -U --noconfirm --needed 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 
+sudo pacman -U --noconfirm --needed 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' 
+echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
+yes | sudo pacman -Syu
+
+echo
+tput setaf 3
+echo "######################################################"
+echo "################### Install Software"
+echo "######################################################"
+tput sgr0
+echo
+# Install Install Software
+sudo pacman -S linux-headers --noconfirm --needed
+sudo pacman -S anydesk-bin --noconfirm --needed
+sudo pacman -S rustdesk-bin --noconfirm --needed
 sudo pacman -S base-devel --noconfirm --needed
 sudo pacman -S bash-completion --noconfirm --needed
 sudo pacman -S git --noconfirm --needed
 sudo pacman -S go --noconfirm --needed
 sudo pacman -S terminator --noconfirm --needed
 sudo pacman -S vim --noconfirm --needed
-
+sudo pacman -S yay-git --noconfirm --needed
+sudo pacman -S brave-bin --noconfirm --needed
+sudo pacman -S thunderbird --noconfirm --needed
+sudo pacman -S virtualbox --noconfirm --needed
+sudo pacman -S virtualbox-host-dkms --noconfirm --needed
+sudo pacman -S cryptomator --noconfirm --needed
+sudo pacman -S openvpn --noconfirm --needed
+sudo pacman -S keepassxc --noconfirm --needed
+sudo pacman -S htop --noconfirm --needed
+sudo pacman -S btop --noconfirm --needed
 
 echo
 tput setaf 3
@@ -94,42 +121,9 @@ sudo pacman -S fish --noconfirm --needed
 echo
 tput setaf 3
 echo "######################################################"
-echo "################### Install Yay"
+echo "################### Enable Services"
 echo "######################################################"
 tput sgr0
 echo
-# Install Yay
-cd /home/$USER/
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si 
-echo
-tput setaf 3
-echo "######################################################"
-echo "################### Install AUR Software"
-echo "######################################################"
-tput sgr0
-echo
-# Install AUR Software
-
-#yay -S brave-bin --noconfirm
-
-echo
-tput setaf 3
-echo "######################################################"
-echo "################### Install Chaotic Repo"
-echo "######################################################"
-tput sgr0
-echo
-# Install Chaotic Repo
-
-yes | sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-yes | sudo pacman-key --lsign-key 3056513887B78AEB
-
-sudo pacman -U --noconfirm --needed 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 
-sudo pacman -U --noconfirm --needed 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' 
-
-
-echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
-
-yes | sudo pacman -Syu
+# Enable Services
+sudo systemctl enable --now rustdesk
