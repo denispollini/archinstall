@@ -114,6 +114,8 @@ sudo pacman -S libreoffice-still --noconfirm --needed
 sudo pacman -S onlyoffice-bin --noconfirm --needed
 sudo pacman -S spotify --noconfirm --needed
 sudo pacman -S discord --noconfirm --needed
+sudo pacman -S neofetch --noconfirm --needed
+sudo pacman -S fastfetch --noconfirm --needed
 
 
 curl -f https://zed.dev/install.sh | sh
