@@ -108,7 +108,15 @@ sudo pacman -S keepassxc --noconfirm --needed
 sudo pacman -S htop --noconfirm --needed
 sudo pacman -S btop --noconfirm --needed
 sudo pacman -S sublime-text-4 --noconfirm --needed
+sudo pacman -S insync --noconfirm --needed
+sudo pacman -S nextcloud-client --noconfirm --needed
+sudo pacman -S libreoffice-still --noconfirm --needed
+sudo pacman -S onlyoffice-bin --noconfirm --needed
+sudo pacman -S spotify --noconfirm --needed
+sudo pacman -S discord --noconfirm --needed
 
+
+curl -f https://zed.dev/install.sh | sh
 
 echo
 tput setaf 3
